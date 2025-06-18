@@ -18,7 +18,7 @@ const AuthScreen: React.FC<Props> = () => {
       <View style={styles.welcomeContainer}>
         <Text style={styles.welcomeText}>Welcome to AtoB!</Text>
         <Image
-          source={require('../assets/taxi-logo.png')}
+          source={require('../assets/taxi-logo.webp')}
           style={styles.logo}
         />
         <Text style={styles.title}>AtoB Taxi</Text>
@@ -35,7 +35,7 @@ const AuthScreen: React.FC<Props> = () => {
         
         <TouchableOpacity 
           style={[styles.button, styles.signupButton]}
-          onPress={() => navigation.navigate('SignUp')}
+          onPress={() => navigation.navigate('Signup')}
         >
           <Text style={styles.buttonText}>Sign Up</Text>
         </TouchableOpacity>
@@ -63,8 +63,8 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   logo: {
-    width: 100,
-    height: 100,
+    width: 300,
+    height: 300,
     resizeMode: 'contain',
   },
   title: {
@@ -77,17 +77,17 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   button: {
-    backgroundColor: '#007AFF',
+    backgroundColor: '#FFD700',
     padding: 15,
     borderRadius: 8,
     marginBottom: 10,
     alignItems: 'center',
   },
   signupButton: {
-    backgroundColor: '#00C853',
+    backgroundColor: '#FFD700',
   },
   buttonText: {
-    color: '#fff',
+    color: '#000',
     fontSize: 16,
     fontWeight: '600',
   },

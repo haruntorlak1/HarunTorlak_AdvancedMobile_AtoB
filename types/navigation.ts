@@ -1,11 +1,34 @@
-import { NavigatorScreenParams } from '@react-navigation/native';
-
-export type RootStackParamList = {
-  Auth: NavigatorScreenParams<AuthStackParamList>;
-};
+import { NavigatorScreenParams, RouteProp } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 export type AuthStackParamList = {
+  AuthWelcome: undefined;
   Login: undefined;
-  SignUp: undefined;
+  Signup: undefined;
   ForgotPassword: undefined;
 };
+
+export type HomeStackParamList = {
+  Home: undefined;
+  SelectDriver: undefined;
+};
+
+export type ProfileStackParamList = {
+  Profile: undefined;
+  RideHistory: undefined;
+  RideHistoryDetails: { rideId: string };
+};
+
+export type MainStackParamList = {
+  HomeStack: NavigatorScreenParams<HomeStackParamList>;
+  ProfileStack: NavigatorScreenParams<ProfileStackParamList>;
+  Logout: undefined;
+};
+
+export type RootStackParamList = {
+  AuthFlow: NavigatorScreenParams<AuthStackParamList>;
+  Main: NavigatorScreenParams<MainStackParamList>;
+};
+
+export type ProfileStackNavigationProp = NativeStackNavigationProp<ProfileStackParamList>;
+export type ProfileStackRouteProp<RouteName extends keyof ProfileStackParamList> = RouteProp<ProfileStackParamList, RouteName>;

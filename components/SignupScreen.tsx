@@ -1,19 +1,39 @@
-import { Link } from 'expo-router';
+import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View, Image } from 'react-native';
+import { useAuth } from '../hooks/useAuth';
+import { AuthStackParamList } from '../types/navigation';
+
+type SignupScreenNavigationProp = {
+  navigate: (screen: keyof AuthStackParamList) => void;
+};
 
 export default function SignupScreen() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const navigation = useNavigation<SignupScreenNavigationProp>();
+  const { signUp } = useAuth();
 
   const handleSignup = async () => {
+    if (email === '' || password === '') {
+      setError('Email and password cannot be empty.');
+      return;
+    }
     try {
-      console.log('Signup attempt with:', { username, email, password });
-      setError('Signup successful!');
-    } catch (err) {
-      setError('Signup failed. Please try again.');
+      await signUp(email, password, username);
+    } catch (err: any) {
+      let errorMessage = 'Failed to create an account. Please try again.';
+      if (err.code === 'auth/email-already-in-use') {
+        errorMessage = 'This email address is already in use.';
+      } else if (err.code === 'auth/invalid-email') {
+        errorMessage = 'That email address is invalid!';
+      } else if (err.code === 'auth/weak-password') {
+        errorMessage = 'The password is too weak.';
+      }
+      setError(errorMessage);
+      console.error('Signup failed:', err.code, err.message);
     }
   };
 
@@ -57,11 +77,9 @@ export default function SignupScreen() {
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
 
-      <Link href="/login" asChild>
-        <TouchableOpacity style={styles.loginButton}>
+      <TouchableOpacity style={styles.loginButton} onPress={() => navigation.navigate('Login')}>
           <Text style={styles.loginButtonText}>Already have an account? Login</Text>
         </TouchableOpacity>
-      </Link>
     </View>
   );
 }
@@ -81,8 +99,8 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   logo: {
-    width: 150,
-    height: 150,
+    width: 300,
+    height: 300,
     alignSelf: 'center',
     marginBottom: 30,
   },
@@ -95,7 +113,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   button: {
-    backgroundColor: '#FFC107',
+    backgroundColor: '#FFD700',
     padding: 15,
     borderRadius: 8,
     alignItems: 'center',

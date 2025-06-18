@@ -1,18 +1,37 @@
-import { Link } from 'expo-router';
+import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../firebase';
+import { AuthStackParamList } from '../types/navigation';
+
+type LoginScreenNavigationProp = {
+  navigate: (screen: keyof AuthStackParamList) => void;
+  reset: (state: any) => void;
+};
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const navigation = useNavigation<LoginScreenNavigationProp>();
 
   const handleLogin = async () => {
+    if (email === '' || password === '') {
+      setError('Email and password cannot be empty.');
+      return;
+    }
     try {
-      console.log('Login attempt with:', { email, password });
-      setError('Login successful!');
-    } catch (err) {
-      setError('Login failed. Please try again.');
+      await signInWithEmailAndPassword(auth, email, password);
+    } catch (err: any) {
+      let errorMessage = 'Failed to log in. Please check your credentials.';
+      if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential') {
+        errorMessage = 'Invalid email or password.';
+      } else if (err.code === 'auth/invalid-email') {
+        errorMessage = 'That email address is invalid!';
+      }
+      setError(errorMessage);
+      console.error('Login failed:', err.code, err.message);
     }
   };
 
@@ -51,11 +70,9 @@ export default function LoginScreen() {
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
 
-      <Link href="/signup" asChild>
-        <TouchableOpacity style={styles.signupButton}>
+      <TouchableOpacity style={styles.signupButton} onPress={() => navigation.navigate('Signup')}>
           <Text style={styles.signupButtonText}>Don't have an account? Sign up</Text>
         </TouchableOpacity>
-      </Link>
     </View>
   );
 }
@@ -74,8 +91,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   logo: {
-    width: 150,
-    height: 150,
+    width: 300,
+    height: 300,
     alignSelf: 'center',
     marginBottom: 30,
   },
@@ -93,7 +110,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   button: {
-    backgroundColor: '#FFC107',
+    backgroundColor: '#FFD700',
     padding: 15,
     borderRadius: 8,
     alignItems: 'center',
