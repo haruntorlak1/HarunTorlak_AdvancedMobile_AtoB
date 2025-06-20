@@ -3,7 +3,7 @@ import { addDoc, collection, getDocs, serverTimestamp } from 'firebase/firestore
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, Alert, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useAuth } from '../hooks/useAuth';
-import { db } from '../lib/firebase';
+import { db } from '../firebase';
 
 interface Driver {
   id: string;

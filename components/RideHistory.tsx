@@ -3,7 +3,7 @@ import { collection, getDocs, query, where, orderBy } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useAuth } from '../hooks/useAuth';
-import { db } from '../lib/firebase';
+import { db } from '../firebase';
 import { ProfileStackNavigationProp } from '../types/navigation';
 
 interface Ride {

@@ -2,7 +2,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { doc, getDoc } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { db } from '../lib/firebase';
+import { db } from '../firebase';
 import { Ride } from '../types/types';
 import { ProfileStackRouteProp } from '../types/navigation';
 

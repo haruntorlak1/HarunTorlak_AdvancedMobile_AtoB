@@ -3,6 +3,7 @@ import React from 'react';
 import ProfileScreen from '../components/ProfileScreen';
 import RideHistoryScreen from '../components/RideHistory';
 import RideHistoryDetailsScreen from '../components/RideHistoryDetailsScreen';
+import PaymentInfoScreen from '../components/PaymentInfoScreen';
 import { ProfileStackParamList } from '../types/navigation';
 
 const ProfileStack = createNativeStackNavigator<ProfileStackParamList>();
@@ -17,6 +18,7 @@ const ProfileStackNavigator = () => {
       <ProfileStack.Screen name="Profile" component={ProfileScreen} />
       <ProfileStack.Screen name="RideHistory" component={RideHistoryScreen} />
       <ProfileStack.Screen name="RideHistoryDetails" component={RideHistoryDetailsScreen} />
+      <ProfileStack.Screen name="PaymentInfo" component={PaymentInfoScreen} />
     </ProfileStack.Navigator>
   );
 };

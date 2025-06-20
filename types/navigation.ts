@@ -17,6 +17,7 @@ export type ProfileStackParamList = {
   Profile: undefined;
   RideHistory: undefined;
   RideHistoryDetails: { rideId: string };
+  PaymentInfo: undefined;
 };
 
 export type MainStackParamList = {

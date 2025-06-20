@@ -2,6 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { Alert, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { useAuth } from '../hooks/useAuth';
+import { FontAwesome } from '@expo/vector-icons';
 
 const ProfileScreen = () => {
   const { user, updateUserProfile, updateUserPassword } = useAuth();
@@ -99,10 +100,25 @@ const ProfileScreen = () => {
         </View>
       ) : (
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('RideHistory' as never)}>
+          <TouchableOpacity 
+            style={[styles.button, styles.paymentButton]} 
+            onPress={() => navigation.navigate('PaymentInfo' as never)}
+          >
+            <FontAwesome name="credit-card" size={16} color="#000" style={styles.buttonIcon} />
+            <Text style={styles.buttonText}>Payment Information</Text>
+          </TouchableOpacity>
+          <TouchableOpacity 
+            style={styles.button} 
+            onPress={() => navigation.navigate('RideHistory' as never)}
+          >
+            <FontAwesome name="history" size={16} color="#000" style={styles.buttonIcon} />
             <Text style={styles.buttonText}>Ride History</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() => setIsEditMode(true)}>
+          <TouchableOpacity 
+            style={[styles.button, styles.editButton]} 
+            onPress={() => setIsEditMode(true)}
+          >
+            <FontAwesome name="pencil" size={16} color="#000" style={styles.buttonIcon} />
             <Text style={styles.buttonText}>Edit Profile</Text>
           </TouchableOpacity>
         </View>
@@ -155,6 +171,7 @@ const styles = StyleSheet.create({
   editContainer: {
     width: '100%',
     marginTop: 20,
+    alignItems: 'center',
   },
   button: {
     backgroundColor: '#FFD700',
@@ -163,6 +180,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '80%',
     marginBottom: 10,
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  buttonIcon: {
+    marginRight: 8,
+  },
+  paymentButton: {
+    backgroundColor: '#FFD700',
+  },
+  editButton: {
+    backgroundColor: '#FFD700',
   },
   cancelButton: {
     backgroundColor: '#FFD700',
